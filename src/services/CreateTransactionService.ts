@@ -1,5 +1,6 @@
-import { getCustomRepository } from 'typeorm';
+import { getCustomRepository, getRepository } from 'typeorm';
 import AppError from '../errors/AppError';
+import Audit from '../models/Audit';
 
 import Transaction from '../models/Transaction';
 import TransactionsRepository from '../repositories/TransactionsRepository';
@@ -20,6 +21,7 @@ class CreateTransactionService {
     categoryTitle,
   }: RequestDto): Promise<Transaction> {
     const transactionsRepository = getCustomRepository(TransactionsRepository);
+    const auditRepository = getRepository(Audit);
 
     const { total } = await transactionsRepository.getBalance();
 
@@ -37,6 +39,17 @@ class CreateTransactionService {
       category_id: category.id,
     });
 
+    const changes = {
+      ...transaction,
+      _status: 'created',
+    };
+
+    const audit = auditRepository.create({
+      table: 'transactions',
+      changes: JSON.stringify(changes),
+    });
+
+    await auditRepository.save(audit);
     await transactionsRepository.save(transaction);
 
     return transaction;
