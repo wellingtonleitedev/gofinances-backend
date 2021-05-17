@@ -29,7 +29,7 @@
 
 <p align="center">
   <a href="#rocket-technologies">
-    <img align="center" src="https://img.shields.io/badge/teste-Technologies-a5a5a5"/>
+    <img align="center" src="https://img.shields.io/badge/Technologies-a5a5a5"/>
   </a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#information_source-how-to-use">
     <img align="center" src="https://img.shields.io/badge/How_To_Use-a5a5a5"/>
